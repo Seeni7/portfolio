@@ -1,3 +1,5 @@
+<img src="\Downloads\generated-image-1" width="100%" />
+
 BEGIN PORTFOLIO
 Director of Engineering
 FAANG‑Level Engineering Leadership • Platform Reliability • DevSecOps • AI Integration • Large‑Scale Systems
