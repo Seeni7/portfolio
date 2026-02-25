@@ -1,7 +1,3 @@
-YOUR GITHUB PORTFOLIO — DIRECTOR OF ENGINEERING (FAANG LEVEL)
-Paste this as README.md in your repo:
-https://github.com/Seeni7/portfolio
-
 BEGIN PORTFOLIO
 Director of Engineering
 FAANG‑Level Engineering Leadership • Platform Reliability • DevSecOps • AI Integration • Large‑Scale Systems
