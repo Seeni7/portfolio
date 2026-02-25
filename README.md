@@ -1,4 +1,4 @@
-<img src="\Downloads\generated-image-1" width="100%" />
+
 
 BEGIN PORTFOLIO
 Director of Engineering
