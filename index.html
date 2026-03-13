@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seeni Rengasamy — Director of Engineering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0a;
+    --paper: #f5f0e8;
+    --accent: #c8401a;
+    --gold: #c9a84c;
+    --steel: #2a3545;
+    --mist: #e8e3d8;
+    --rule: 1px solid rgba(10,10,10,0.15);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Instrument Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999; opacity: 0.4;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 0;
+    overflow: hidden;
+    background: var(--steel);
+  }
+
+  .header-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #1a2535 0%, #0d1520 50%, #1e2d1a 100%);
+  }
+
+  .header-grid-lines {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.06) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+
+  .header-accent-bar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--gold), var(--accent));
+  }
+
+  .header-content {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100vh;
+    align-items: stretch;
+  }
+
+  .header-left {
+    padding: 80px 60px 80px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 1px solid rgba(201,168,76,0.2);
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .eyebrow::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(56px, 7vw, 96px);
+    line-height: 0.92;
+    color: #f5f0e8;
+    letter-spacing: 0.02em;
+    margin-bottom: 8px;
+  }
+
+  .name span {
+    display: block;
+    color: var(--gold);
+  }
+
+  .title-block {
+    margin-top: 32px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(201,168,76,0.25);
+  }
+
+  .title-main {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: #f5f0e8;
+    font-style: italic;
+    line-height: 1.3;
+    margin-bottom: 16px;
+  }
+
+  .title-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.4);
+    padding: 5px 12px;
+    border-radius: 2px;
+  }
+
+  .header-right {
+    padding: 80px 80px 80px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+  }
+
+  .stat-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .stat-card {
+    padding: 24px;
+    border: 1px solid rgba(201,168,76,0.2);
+    background: rgba(255,255,255,0.03);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--accent);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.3s;
+  }
+
+  .stat-card:hover::before { transform: scaleY(1); }
+  .stat-card:hover { border-color: rgba(201,168,76,0.5); }
+
+  .stat-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.5);
+  }
+
+  .header-cta {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin-top: 16px;
+  }
+
+  .btn-primary {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--gold);
+    padding: 14px 28px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .btn-primary:hover { background: #e0b95a; transform: translateY(-1px); }
+
+  .btn-outline {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.7);
+    background: transparent;
+    padding: 14px 28px;
+    border: 1px solid rgba(245,240,232,0.25);
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── SCROLL INDICATOR ── */
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    z-index: 2;
+    animation: bounce 2s infinite;
+  }
+
+  .scroll-hint span {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.3);
+  }
+
+  .scroll-arrow {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(201,168,76,0.6), transparent);
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* ── MAIN CONTENT ── */
+  main { background: var(--paper); }
+
+  /* ── SECTION STRUCTURE ── */
+  .section {
+    padding: 100px 80px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(10,10,10,0.12), transparent);
+    margin: 0 80px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    margin-bottom: 64px;
+  }
+
+  .section-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 4vw, 56px);
+    letter-spacing: 0.03em;
+    line-height: 1;
+    color: var(--ink);
+    flex: 1;
+  }
+
+  .section-rule {
+    flex: 1;
+    height: 1px;
+    background: rgba(10,10,10,0.12);
+    margin-left: 24px;
+    align-self: center;
+  }
+
+  /* ── EXECUTIVE SUMMARY ── */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .summary-text p {
+    font-size: 17px;
+    line-height: 1.8;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  .summary-text p strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .summary-highlights {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .highlight-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px;
+    background: var(--ink);
+    color: var(--paper);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s;
+  }
+
+  .highlight-item:hover { transform: translateX(4px); }
+
+  .highlight-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .highlight-text {
+    font-size: 13px;
+    line-height: 1.5;
+    color: rgba(245,240,232,0.85);
+    font-weight: 300;
+  }
+
+  /* ── ORG SECTION ── */
+  .org-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(10,10,10,0.1);
+  }
+
+  .org-card {
+    background: var(--paper);
+    padding: 36px 28px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+
+  .org-card:hover { background: var(--ink); }
+  .org-card:hover .org-card-title { color: var(--gold); }
+  .org-card:hover .org-card-desc { color: rgba(245,240,232,0.6); }
+
+  .org-card-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px;
+    line-height: 1;
+    color: rgba(10,10,10,0.06);
+    position: absolute;
+    bottom: -10px; right: 10px;
+    transition: color 0.3s;
+  }
+
+  .org-card:hover .org-card-num { color: rgba(201,168,76,0.08); }
+
+  .org-card-icon {
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+
+  .org-card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 16px;
+    font-style: italic;
+    color: var(--ink);
+    margin-bottom: 8px;
+    transition: color 0.3s;
+  }
+
+  .org-card-desc {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: #777;
+    text-transform: uppercase;
+    line-height: 1.6;
+    transition: color 0.3s;
+  }
+
+  /* ── METRICS BAR ── */
+  .metrics-full {
+    background: var(--ink);
+    padding: 80px;
+  }
+
+  .metrics-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .metrics-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    margin-bottom: 48px;
+    text-align: center;
+  }
+
+  .metrics-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.05);
+  }
+
+  .metric-cell {
+    background: var(--ink);
+    padding: 36px 24px;
+    text-align: center;
+    border-top: 2px solid transparent;
+    transition: border-color 0.3s;
+  }
+
+  .metric-cell:hover { border-top-color: var(--accent); }
+
+  .metric-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 44px;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .metric-lbl {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.4);
+    line-height: 1.5;
+  }
+
+  /* ── AI STRATEGY ── */
+  .ai-phases {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  .phase-card {
+    position: relative;
+    padding: 40px 32px;
+    border: 1px solid rgba(10,10,10,0.1);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .phase-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(10,10,10,0.1);
+  }
+
+  .phase-card:nth-child(2) {
+    background: var(--steel);
+    border-color: transparent;
+  }
+
+  .phase-card:nth-child(2) .phase-label,
+  .phase-card:nth-child(2) .phase-title,
+  .phase-card:nth-child(2) .phase-items li { color: var(--paper); }
+  .phase-card:nth-child(2) .phase-label { color: var(--gold); }
+
+  .phase-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 120px;
+    line-height: 1;
+    position: absolute;
+    top: -20px; right: -10px;
+    opacity: 0.06;
+    color: var(--accent);
+  }
+
+  .phase-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .phase-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    font-style: italic;
+    color: var(--ink);
+    margin-bottom: 24px;
+    line-height: 1.3;
+  }
+
+  .phase-items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .phase-items li {
+    font-size: 13px;
+    color: #555;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .phase-items li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 11px;
+  }
+
+  /* ── ROADMAP ── */
+  .roadmap-track {
+    position: relative;
+    padding-top: 24px;
+  }
+
+  .roadmap-spine {
+    position: absolute;
+    top: 60px;
+    left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--gold), var(--accent));
+  }
+
+  .roadmap-stops {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+    position: relative;
+  }
+
+  .stop {
+    position: relative;
+    padding-top: 80px;
+  }
+
+  .stop-dot {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 20px; height: 20px;
+    border: 3px solid var(--paper);
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px rgba(200,64,26,0.2);
+  }
+
+  .stop:nth-child(2) .stop-dot { background: var(--gold); box-shadow: 0 0 0 4px rgba(201,168,76,0.2); }
+  .stop:nth-child(3) .stop-dot { background: var(--steel); box-shadow: 0 0 0 4px rgba(42,53,69,0.2); }
+
+  .stop-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  .stop:nth-child(2) .stop-period { color: var(--gold); }
+  .stop:nth-child(3) .stop-period { color: var(--steel); }
+
+  .stop-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  .stop-items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .stop-items li {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.5;
+    padding: 8px 12px;
+    border-left: 2px solid rgba(10,10,10,0.08);
+    transition: border-color 0.2s, padding-left 0.2s;
+  }
+
+  .stop-items li:hover { border-left-color: var(--accent); padding-left: 16px; }
+
+  /* ── IMPACT ── */
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    background: rgba(10,10,10,0.08);
+  }
+
+  .impact-cell {
+    background: var(--paper);
+    padding: 48px 40px;
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    transition: background 0.3s;
+  }
+
+  .impact-cell:hover { background: var(--mist); }
+
+  .impact-metric {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    line-height: 1;
+    color: var(--accent);
+    flex-shrink: 0;
+    min-width: 120px;
+  }
+
+  .impact-desc-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    font-style: italic;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .impact-desc-body {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.6;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    padding: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--paper);
+    letter-spacing: 0.05em;
+  }
+
+  .footer-name span { color: var(--gold); }
+
+  .footer-links {
+    display: flex;
+    gap: 32px;
+  }
+
+  .footer-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.4);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-link:hover { color: var(--gold); }
+
+  .footer-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.25);
+  }
+
+  /* ── TIMELINE ── */
+  .tl-entry {
+    position: relative;
+    padding: 0 0 56px 40px;
+    display: flex;
+    flex-direction: column;
+  }
+  .tl-dot {
+    position: absolute;
+    left: -6px; top: 6px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    border: 2px solid var(--mist);
+    box-shadow: 0 0 0 3px rgba(10,10,10,0.08);
+    flex-shrink: 0;
+  }
+  .tl-body { display: flex; flex-direction: column; gap: 6px; }
+  .tl-company {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: 0.05em;
+    color: var(--ink); line-height: 1;
+  }
+  .tl-role {
+    font-family: 'DM Serif Display', serif;
+    font-size: 15px; font-style: italic; color: #444;
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+  .tl-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); border: 1px solid var(--accent);
+    padding: 2px 8px; border-radius: 2px; font-style: normal;
+  }
+  .tl-badge-full { color: var(--steel); border-color: var(--steel); }
+  .tl-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: 0.15em; color: #999; text-transform: uppercase;
+  }
+  .tl-desc { font-size: 14px; line-height: 1.7; color: #555; max-width: 720px; margin-top: 4px; }
+  .tl-skills {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px; letter-spacing: 0.15em;
+    color: var(--accent); text-transform: uppercase;
+    margin-top: 4px; padding: 8px 12px;
+    background: rgba(200,64,26,0.06);
+    border-left: 2px solid var(--accent); max-width: 640px;
+  }
+
+  /* ── ANIMATIONS ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    .header-content { grid-template-columns: 1fr; }
+    .header-right { border-top: 1px solid rgba(201,168,76,0.2); border-right: none; }
+    .header-left { padding: 80px 40px 60px; border-right: none; }
+    .header-right { padding: 40px 40px 80px; }
+    .section { padding: 60px 40px; }
+    .metrics-full { padding: 60px 40px; }
+    .org-grid { grid-template-columns: repeat(2, 1fr); }
+    .metrics-row { grid-template-columns: repeat(3, 1fr); }
+    .ai-phases { grid-template-columns: 1fr; }
+    .roadmap-stops { grid-template-columns: 1fr; }
+    .roadmap-spine { display: none; }
+    .impact-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 32px; text-align: center; }
+    .summary-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="header-bg"></div>
+  <div class="header-grid-lines"></div>
+  <div class="header-accent-bar"></div>
+
+  <div class="header-content">
+    <!-- Left -->
+    <div class="header-left fade-up visible">
+      <div class="eyebrow">Director of Engineering</div>
+      <div class="name">
+        Seeni<br>
+        <span>Rengasamy</span>
+      </div>
+      <div class="title-block">
+        <div class="title-main">FAANG‑Level Engineering Leadership</div>
+        <div class="title-tags">
+          <span class="tag">Platform Reliability</span>
+          <span class="tag">DevSecOps</span>
+          <span class="tag">AI Integration</span>
+          <span class="tag">Large‑Scale Systems</span>
+          <span class="tag">ITAR Compliance</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right -->
+    <div class="header-right fade-up visible">
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="stat-number">45</div>
+          <div class="stat-label">Engineers Led</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">400+</div>
+          <div class="stat-label">Releases / Year</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">90K+</div>
+          <div class="stat-label">Unique Users</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">99.99%</div>
+          <div class="stat-label">Availability Target</div>
+        </div>
+      </div>
+      <div class="header-cta">
+        <a href="/cdn-cgi/l/email-protection#3c" class="btn-primary">Get In Touch</a>
+        <a href="https://www.linkedin.com/in/seeni-rengasamy-2031849/" target="_blank" class="btn-outline">LinkedIn ↗</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</header>
+
+<!-- ── EXECUTIVE SUMMARY ── -->
+<main>
+<section class="section fade-up">
+  <div class="section-header">
+    <span class="section-number">01</span>
+    <h2 class="section-title">Executive Summary</h2>
+    <div class="section-rule"></div>
+  </div>
+  <div class="summary-grid">
+    <div class="summary-text">
+      <p>I lead a <strong>45‑engineer organization</strong> supporting 400 releases per year across multiple products used by more than 90,000 unique users. My ownership spans reliability, platform engineering, CI/CD foundations, DevSecOps, developer experience, and release governance.</p>
+      <p>Currently scaling the organization to <strong>65 engineers within 18 months</strong> — while maintaining high release velocity, zero downtime deployments, ITAR compliance, 99.99% availability, continuous audit readiness, and a culture of accountability and operational excellence.</p>
+      <p>My background includes work with <strong>defense customers</strong>, strict data governance environments, and 24×7 reliability expectations. I bring FAANG‑level engineering execution to teams where reliability, compliance, and scale matter most.</p>
+    </div>
+    <div class="summary-highlights">
+      <div class="highlight-item">
+        <span class="highlight-icon">⚡</span>
+        <span class="highlight-text">Scaled engineering orgs from 20 → 60+ engineers across 3 countries</span>
+      </div>
+      <div class="highlight-item">
+        <span class="highlight-icon">🛡</span>
+        <span class="highlight-text">Delivered zero-downtime deployments with automated rollback in 30–60 seconds</span>
+      </div>
+      <div class="highlight-item">
+        <span class="highlight-icon">🤖</span>
+        <span class="highlight-text">Drove AI adoption across SDLC with full compliance & privacy controls</span>
+      </div>
+      <div class="highlight-item">
+        <span class="highlight-icon">📋</span>
+        <span class="highlight-text">Reduced audit prep from 6 weeks to under 3 days via full automation</span>
+      </div>
+      <div class="highlight-item">
+        <span class="highlight-icon">💰</span>
+        <span class="highlight-text">DevSecOps consolidation delivering 35–45% tool cost reduction</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ── ORG STRUCTURE ── -->
+<section class="section fade-up">
+  <div class="section-header">
+    <span class="section-number">02</span>
+    <h2 class="section-title">Teams I Build & Lead</h2>
+    <div class="section-rule"></div>
+  </div>
+  <div class="org-grid">
+    <div class="org-card">
+      <div class="org-card-num">01</div>
+      <div class="org-card-icon">🏗</div>
+      <div class="org-card-title">Platform Engineering</div>
+      <div class="org-card-desc">Cloud + on-prem hybrid<br>infrastructure at scale</div>
+    </div>
+    <div class="org-card">
+      <div class="org-card-num">02</div>
+      <div class="org-card-icon">📡</div>
+      <div class="org-card-title">Site Reliability Engineering</div>
+      <div class="org-card-desc">SLO‑based incidents<br>24×7 on-call rotations</div>
+    </div>
+    <div class="org-card">
+      <div class="org-card-num">03</div>
+      <div class="org-card-icon">🚀</div>
+      <div class="org-card-title">Release Engineering</div>
+      <div class="org-card-desc">Progressive delivery<br>canary + blue/green</div>
+    </div>
+    <div class="org-card">
+      <div class="org-card-num">04</div>
+      <div class="org-card-icon">🛡</div>
+      <div class="org-card-title">DevSecOps / Security</div>
+      <div class="org-card-desc">SAST, DAST, supply chain<br>SBOM + IaC scanning</div>
+    </div>
+    <div class="org-card">
+      <div class="org-card-num">05</div>
+      <div class="org-card-icon">⚙️</div>
+      <div class="org-card-title">Developer Productivity</div>
+      <div class="org-card-desc">20–25% productivity uplift<br>standardized toolchains</div>
+    </div>
+    <div class="org-card">
+      <div class="org-card-num">06</div>
+      <div class="org-card-icon">🤖</div>
+      <div class="org-card-title">Data, AI & Compliance</div>
+      <div class="org-card-desc">AI strategy + automation<br>ITAR / FedRAMP aligned</div>
+    </div>
+    <div class="org-card">
+      <div class="org-card-num">07</div>
+      <div class="org-card-icon">🏛</div>
+      <div class="org-card-title">Architecture & Strategy</div>
+      <div class="org-card-desc">Technical strategy aligned<br>to long-term business goals</div>
+    </div>
+    <div class="org-card">
+      <div class="org-card-num">08</div>
+      <div class="org-card-icon">📊</div>
+      <div class="org-card-title">Compliance Automation</div>
+      <div class="org-card-desc">Immutable logs, SBOM gen<br>audit prep in &lt;3 days</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── METRICS ── -->
+<div class="metrics-full fade-up">
+  <div class="metrics-inner">
+    <div class="metrics-title">● BUSINESS IMPACT AT A GLANCE ●</div>
+    <div class="metrics-row">
+      <div class="metric-cell">
+        <div class="metric-val">3×–10×</div>
+        <div class="metric-lbl">ROI on Reliability<br>Investments</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-val">$30M</div>
+        <div class="metric-lbl">Downtime Cost<br>Avoided / Year</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-val">40%</div>
+        <div class="metric-lbl">Tool Consolidation<br>Savings</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-val">25%</div>
+        <div class="metric-lbl">Engineering Productivity<br>Uplift</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-val">80%</div>
+        <div class="metric-lbl">Release Frequency<br>Increase</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-val">&lt;3 Days</div>
+        <div class="metric-lbl">Audit Prep<br>(was 6 weeks)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── AI STRATEGY ── -->
+<section class="section fade-up">
+  <div class="section-header">
+    <span class="section-number">03</span>
+    <h2 class="section-title">AI Strategy for Engineering</h2>
+    <div class="section-rule"></div>
+  </div>
+  <div class="ai-phases">
+    <div class="phase-card">
+      <div class="phase-number">1</div>
+      <div class="phase-label">Phase One</div>
+      <div class="phase-title">Safe Foundation</div>
+      <ul class="phase-items">
+        <li>Air‑gapped LLM deployments</li>
+        <li>AI code assistance with full audit logs</li>
+        <li>Secure prompt governance framework</li>
+        <li>Local embedding + search for docs</li>
+      </ul>
+    </div>
+    <div class="phase-card">
+      <div class="phase-number">2</div>
+      <div class="phase-label">Phase Two</div>
+      <div class="phase-title">Engineering Intelligence</div>
+      <ul class="phase-items">
+        <li>AI‑based SAST/DAST triage</li>
+        <li>Test selection & flake reduction</li>
+        <li>Automated runbook generation</li>
+        <li>SOP generation from incidents</li>
+      </ul>
+    </div>
+    <div class="phase-card">
+      <div class="phase-number">3</div>
+      <div class="phase-label">Phase Three</div>
+      <div class="phase-title">Autonomous Support</div>
+      <ul class="phase-items">
+        <li>Automated compliance evidence</li>
+        <li>ML‑driven reliability predictions</li>
+        <li>Release risk scoring pipelines</li>
+        <li>Intelligent pipeline auto-tuning</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ── IMPACT ── -->
+<section class="section fade-up">
+  <div class="section-header">
+    <span class="section-number">04</span>
+    <h2 class="section-title">Financial & Operational Impact</h2>
+    <div class="section-rule"></div>
+  </div>
+  <div class="impact-grid">
+    <div class="impact-cell">
+      <div class="impact-metric">35%</div>
+      <div>
+        <div class="impact-desc-title">DevSecOps Tool Consolidation</div>
+        <div class="impact-desc-body">Consolidated 20+ overlapping tools into one integrated, governed platform — cutting costs by 35–45% while reducing operational risk and improving developer experience.</div>
+      </div>
+    </div>
+    <div class="impact-cell">
+      <div class="impact-metric">60%</div>
+      <div>
+        <div class="impact-desc-title">Release Frequency Growth</div>
+        <div class="impact-desc-body">Progressive delivery pipelines with canary deployments, blue/green strategies, and automated rollback in 30–60 seconds. 400+ releases per year, zero downtime.</div>
+      </div>
+    </div>
+    <div class="impact-cell">
+      <div class="impact-metric">3×</div>
+      <div>
+        <div class="impact-desc-title">Countries of Org Presence</div>
+        <div class="impact-desc-body">Built and scaled engineering groups across 3 countries, multiple product lines, and cloud + on-prem hybrid infrastructure, all under 24×7 production SLAs.</div>
+      </div>
+    </div>
+    <div class="impact-cell">
+      <div class="impact-metric">20+</div>
+      <div>
+        <div class="impact-desc-title">DevSecOps Tools Unified</div>
+        <div class="impact-desc-body">CI/CD, SAST/DAST, secrets management, container security, IaC scanning, SBOM, supply chain controls, and observability — one platform, clear ownership.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ROADMAP ── -->
+<section class="section fade-up" style="padding-bottom: 120px;">
+  <div class="section-header">
+    <span class="section-number">05</span>
+    <h2 class="section-title">18–24 Month Engineering Roadmap</h2>
+    <div class="section-rule"></div>
+  </div>
+  <div class="roadmap-track">
+    <div class="roadmap-spine"></div>
+    <div class="roadmap-stops">
+      <div class="stop">
+        <div class="stop-dot"></div>
+        <div class="stop-period">0–6 Months</div>
+        <div class="stop-title">Foundation</div>
+        <ul class="stop-items">
+          <li>SRE + platform hires</li>
+          <li>Standardized pipelines</li>
+          <li>DevSecOps consolidation</li>
+          <li>SLO adoption</li>
+          <li>Zero‑touch monitoring</li>
+        </ul>
+      </div>
+      <div class="stop">
+        <div class="stop-dot"></div>
+        <div class="stop-period">6–12 Months</div>
+        <div class="stop-title">Acceleration</div>
+        <ul class="stop-items">
+          <li>Zero-downtime delivery across all products</li>
+          <li>Compliance automation foundation</li>
+          <li>AI-based SDLC enhancements</li>
+          <li>Release risk scoring</li>
+        </ul>
+      </div>
+      <div class="stop">
+        <div class="stop-dot"></div>
+        <div class="stop-period">12–24 Months</div>
+        <div class="stop-title">Maturity</div>
+        <ul class="stop-items">
+          <li>Mature incident management</li>
+          <li>AI‑powered engineering workflows</li>
+          <li>99.99% availability established</li>
+          <li>Org scaled to 65 engineers</li>
+          <li>Unified reliability dashboards</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ── CAREER TIMELINE ── -->
+<div class="metrics-full fade-up" style="background: var(--mist); padding: 100px 80px;">
+  <div class="metrics-inner">
+    <div style="display:flex; align-items:baseline; gap:24px; margin-bottom:64px;">
+      <span style="font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.2em; color:var(--accent); font-weight:500;">06</span>
+      <h2 style="font-family:'Bebas Neue',sans-serif; font-size:clamp(36px,4vw,56px); letter-spacing:0.03em; color:var(--ink);">Career History</h2>
+      <div style="flex:1; height:1px; background:rgba(10,10,10,0.12); margin-left:24px;"></div>
+    </div>
+
+    <!-- Timeline -->
+    <div style="position:relative; padding-left:32px;">
+      <!-- vertical spine -->
+      <div style="position:absolute; left:0; top:8px; bottom:8px; width:2px; background:linear-gradient(to bottom, var(--accent), var(--gold), var(--steel));"></div>
+
+      <!-- BOEING -->
+      <div class="tl-entry">
+        <div class="tl-dot" style="background:var(--accent);"></div>
+        <div class="tl-body">
+          <div class="tl-company">Boeing</div>
+          <div class="tl-role">DevOps / Platform Architect & Engineer <span class="tl-badge">Contract</span></div>
+          <div class="tl-period">Apr 2021 – Present · 5 yrs</div>
+          <div class="tl-desc">Leading platform architecture and DevOps strategy in a defense and ITAR-regulated environment. Responsible for infrastructure reliability, CI/CD modernization, and AI-aligned engineering practices across mission-critical systems.</div>
+          <div class="tl-skills">Program Management · Engineering Leadership · AI · Infrastructure · Reliability · Coaching</div>
+        </div>
+      </div>
+
+      <!-- CATALIA HEALTH -->
+      <div class="tl-entry">
+        <div class="tl-dot" style="background:var(--gold);"></div>
+        <div class="tl-body">
+          <div class="tl-company">Catalia Health</div>
+          <div class="tl-role">Director of Engineering <span class="tl-badge tl-badge-full">Full-time</span></div>
+          <div class="tl-period">May 2021 – Sep 2021 · 5 mos</div>
+          <div class="tl-desc">Led engineering organization with full ownership of technical leadership, AI integration strategy, budgeting, and org development in a health-tech environment.</div>
+          <div class="tl-skills">Technical Leadership · Budgeting · AI · Engineering Leadership · Creative Ideation</div>
+        </div>
+      </div>
+
+      <!-- BCBS NC -->
+      <div class="tl-entry">
+        <div class="tl-dot" style="background:var(--steel);"></div>
+        <div class="tl-body">
+          <div class="tl-company">Blue Cross Blue Shield of North Carolina</div>
+          <div class="tl-role">Principal DevOps Engineer</div>
+          <div class="tl-period">Sep 2019 – Aug 2020 · 1 yr · Raleigh-Durham</div>
+          <div class="tl-desc">Drove DevOps transformation and infrastructure reliability across one of the largest healthcare insurers in NC, applying AI tooling, pipeline automation, and engineering leadership across cross-functional teams.</div>
+          <div class="tl-skills">Program Management · Reliability · AI · Infrastructure · Clarity · Coaching</div>
+        </div>
+      </div>
+
+      <!-- METLIFE -->
+      <div class="tl-entry">
+        <div class="tl-dot" style="background:var(--accent);"></div>
+        <div class="tl-body">
+          <div class="tl-company">MetLife</div>
+          <div class="tl-role">Principal DevOps Engineer</div>
+          <div class="tl-period">Nov 2018 – Jul 2019 · 9 mos · Cary, NC</div>
+          <div class="tl-desc">Developed and implemented build process pipelines for both cloud and on-prem provisioning. Delivered infrastructure automation including patrol agent rollouts and complex business process management using IPsoft Ipcenter. Delivered via Agile methodologies.</div>
+          <div class="tl-skills">CI/CD · Cloud Provisioning · Infrastructure Automation · Agile · AI</div>
+        </div>
+      </div>
+
+      <!-- L&T INFOTECH -->
+      <div class="tl-entry">
+        <div class="tl-dot" style="background:var(--gold);"></div>
+        <div class="tl-body">
+          <div class="tl-company">Larsen & Toubro Infotech</div>
+          <div class="tl-role">Senior Solution Architect — Cloud Technologies</div>
+          <div class="tl-period">Jul 2018 – Oct 2018 · 4 mos · Cary, NC</div>
+          <div class="tl-desc">Strategic planning and roadmap development for cloud enablement and application migration from on-prem to AWS, including hybrid solutions architecture.</div>
+          <div class="tl-skills">AWS · Cloud Migration · Hybrid Architecture · Strategic Planning</div>
+        </div>
+      </div>
+
+      <!-- CREDIT SUISSE -->
+      <div class="tl-entry">
+        <div class="tl-dot" style="background:var(--steel);"></div>
+        <div class="tl-body">
+          <div class="tl-company">Credit Suisse</div>
+          <div class="tl-role">AVP IT</div>
+          <div class="tl-period">Aug 2014 – May 2018 · 3 yrs 10 mos · Raleigh-Durham</div>
+          <div class="tl-desc">Led global engineering teams across US, India, and Brazil (New York, Princeton, Raleigh, Bangalore, Pune) focused on culture, talent development, and organizational efficiency. Provided strategic, technical, and operational leadership spanning IT Delivery, IT Infrastructure Management, and Cloud Infrastructure — bridging business and technology across the full project lifecycle.</div>
+          <div class="tl-skills">Global Teams · IT Delivery · Cloud Infrastructure · Talent Development · Engineering Leadership</div>
+        </div>
+      </div>
+
+      <!-- IBM -->
+      <div class="tl-entry">
+        <div class="tl-dot" style="background:var(--accent);"></div>
+        <div class="tl-body">
+          <div class="tl-company">IBM Software Group</div>
+          <div class="tl-role">Senior AIX / Linux Engineer</div>
+          <div class="tl-period">Aug 2012 – 2014 · 1 yr 6 mos · Raleigh-Durham</div>
+          <div class="tl-desc">Managed IBM Library Infrastructure in the Software Global Service Organization supporting SaaS in a Hadoop environment. Designed and developed the Disaster Recovery plan for the Global Service Organization.</div>
+          <div class="tl-skills">AIX · Linux · Hadoop · SaaS · Disaster Recovery</div>
+        </div>
+      </div>
+
+      <!-- WELLS FARGO -->
+      <div class="tl-entry">
+        <div class="tl-dot" style="background:var(--gold);"></div>
+        <div class="tl-body">
+          <div class="tl-company">DivIHN Integration · Client: Wells Fargo Bank</div>
+          <div class="tl-role">Senior Unix / Linux Administrator</div>
+          <div class="tl-period">Jan 2011 – Jul 2012 · 1 yr 7 mos · Raleigh-Durham</div>
+          <div class="tl-desc">Managed large-scale Unix/Linux production environments for internet-facing banking infrastructure. Handled SUN/Oracle servers, RHEL, Solaris, AIX, VMware ESX, SAN storage, Veritas NetBackup, and high-availability cluster environments. Coordinated hardware vendors and maintained 24/7 production stability.</div>
+          <div class="tl-skills">Solaris · RHEL · AIX · VMware ESX · Veritas · SAN · High Availability</div>
+        </div>
+      </div>
+
+      <!-- EARLIER ROLES - COLLAPSED STYLE -->
+      <div class="tl-entry">
+        <div class="tl-dot" style="background:var(--steel);"></div>
+        <div class="tl-body">
+          <div class="tl-company">Earlier Roles · 2000–2010</div>
+          <div class="tl-role">Global Support / Infrastructure / System Administration</div>
+          <div class="tl-period">Stratus/AmEx · Deebecon/AT&T · Deebecon/Capital One · Fidelity Investments · Silicon House</div>
+          <div class="tl-desc">Deep technical foundation across global enterprise infrastructure: Unix/Linux system administration, SAN/NAS storage, VMware virtualization, disaster recovery, shell scripting, and large-scale capacity planning. Clients spanned American Express, AT&T, Capital One, Fidelity Investments, and the State of New York. Began career in 1997 as a Utility/Power Plant Engineer in Chennai, India before transitioning to IT infrastructure.</div>
+          <div class="tl-skills">Unix · Linux · Solaris · VMware · SAN · NAS · Veritas · Capacity Planning · Shell Scripting</div>
+        </div>
+      </div>
+
+    </div><!-- end timeline -->
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-name">Seeni <span>Rengasamy</span></div>
+  <div class="footer-links">
+    <a href="https://www.linkedin.com/in/seeni-rengasamy-2031849/" class="footer-link" target="_blank">LinkedIn</a>
+    <a href="/cdn-cgi/l/email-protection#8d" class="footer-link">Contact</a>
+  </div>
+  <div class="footer-badge">Director of Engineering · FAANG‑Level</div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        obs.unobserv
